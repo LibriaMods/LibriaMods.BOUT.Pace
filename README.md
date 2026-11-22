@@ -18,4 +18,7 @@ Everything speeds up while it's on (walking, animations, timers); voices keep th
 Copy `dinput8.dll` next to `bout.exe`. Delete it to uninstall.
 
 ## Build
-`i686-w64-mingw32-gcc -O2 -shared -s -o dinput8.dll src/pace.c src/dinput8.def -Wl,--kill-at -static-libgcc`
+- **Visual Studio** (C++ desktop workload): open `LibriaMods.BOUT.Pace.vcxproj` (or the LibriaMods workspace), **Release | Win32**.
+  The build copies `dinput8.dll` into the game folder (`BOUTDir`, default `D:\GOG Games\The Book of Unwritten Tales`,
+  override in `..\LibriaMods.user.props`). Close the game first.
+- **MinGW**: `i686-w64-mingw32-gcc -O2 -shared -s -o dinput8.dll src/pace.c src/dinput8.mingw.def -Wl,--kill-at -static-libgcc`

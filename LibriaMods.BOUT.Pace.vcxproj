@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Book of Unwritten Tales is 32-bit: build Win32. Output is dinput8.dll; if the game is installed
+     (BOUTDir, default below, override in ..\LibriaMods.user.props) it is copied next to bout.exe. -->
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32"><Configuration>Debug</Configuration><Platform>Win32</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32"><Configuration>Release</Configuration><Platform>Win32</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6A1F3C52-8B0D-4E2B-9C1A-B0D7E5A1C001}</ProjectGuid>
+    <RootNamespace>LibriaModsBOUTPace</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <TargetName>dinput8</TargetName>
+    <OutDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)obj\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\LibriaMods.user.props" Condition="Exists('..\LibriaMods.user.props')" />
+  <PropertyGroup>
+    <BOUTDir Condition="'$(BOUTDir)' == ''">D:\GOG Games\The Book of Unwritten Tales</BOUTDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <Optimization Condition="'$(Configuration)' == 'Release'">MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <ModuleDefinitionFile>src\dinput8.def</ModuleDefinitionFile>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\pace.c" />
+    <None Include="src\dinput8.def" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="InstallToGame" AfterTargets="Build" Condition="Exists('$(BOUTDir)\bout.exe')">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BOUTDir)" ContinueOnError="true" />
+    <Message Importance="high" Text="dinput8.dll copied to $(BOUTDir) (close the game first if the copy fails)" />
+  </Target>
+</Project>

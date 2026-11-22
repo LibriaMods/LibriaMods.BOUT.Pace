@@ -6,6 +6,7 @@
  *
  * Keys (LibriaPace.ini next to bout.exe): F5 on/off, F6 slower, F7 faster.
  */
+#define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #include <stdio.h>
 
@@ -204,7 +205,10 @@ static void LoadReal(void)
     if (real) realDirectInput8Create = (DirectInput8Create_t)GetProcAddress(real, "DirectInput8Create");
 }
 
-__declspec(dllexport) HRESULT WINAPI DirectInput8Create(HINSTANCE h, DWORD v, REFIID r, LPVOID *o, LPUNKNOWN u)
+#ifdef __GNUC__
+__declspec(dllexport)
+#endif
+HRESULT WINAPI DirectInput8Create(HINSTANCE h, DWORD v, REFIID r, LPVOID *o, LPUNKNOWN u)
 {
     LoadReal();
     if (!realDirectInput8Create) return E_FAIL;
