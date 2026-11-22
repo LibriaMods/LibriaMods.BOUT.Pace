@@ -19,6 +19,16 @@ Copy `dinput8.dll` next to `bout.exe`. Delete it to uninstall.
 
 ## Build
 - **Visual Studio** (C++ desktop workload): open `LibriaMods.BOUT.Pace.vcxproj` (or the LibriaMods workspace), **Release | Win32**.
-  The build copies `dinput8.dll` into the game folder (`BOUTDir`, default `D:\GOG Games\The Book of Unwritten Tales`,
+  The build copies `dinput8.dll` into the game folder (`BOUTDir`, default `C:\GOG Games\The Book of Unwritten Tales`,
   override in `..\LibriaMods.user.props`). Close the game first.
 - **MinGW**: `i686-w64-mingw32-gcc -O2 -shared -s -o dinput8.dll src/pace.c src/dinput8.mingw.def -Wl,--kill-at -static-libgcc`
+
+For a game installed elsewhere, create `LibriaMods.user.props` in the folder that contains the repos:
+
+```xml
+<Project>
+  <PropertyGroup>
+    <BOUTDir>D:\GOG Games\The Book of Unwritten Tales</BOUTDir>
+  </PropertyGroup>
+</Project>
+```

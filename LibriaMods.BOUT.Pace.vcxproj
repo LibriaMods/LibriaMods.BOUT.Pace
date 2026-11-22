@@ -26,7 +26,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="..\LibriaMods.user.props" Condition="Exists('..\LibriaMods.user.props')" />
   <PropertyGroup>
-    <BOUTDir Condition="'$(BOUTDir)' == ''">D:\GOG Games\The Book of Unwritten Tales</BOUTDir>
+    <BOUTDir Condition="'$(BOUTDir)' == ''">C:\GOG Games\The Book of Unwritten Tales</BOUTDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
