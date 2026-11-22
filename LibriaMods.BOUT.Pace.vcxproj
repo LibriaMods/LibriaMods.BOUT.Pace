@@ -49,7 +49,10 @@
     <Warning Text="The Book of Unwritten Tales is 32-bit: build LibriaMods.BOUT.Pace as Win32 (x86). This $(Platform) DLL is not installed." />
   </Target>
   <Target Name="InstallToGame" AfterTargets="Build" Condition="'$(Platform)' == 'Win32' And Exists('$(BOUTDir)\bout.exe')">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BOUTDir)" ContinueOnError="true" />
-    <Message Importance="high" Text="dinput8.dll copied to $(BOUTDir) (close the game first if the copy fails)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BOUTDir)" Retries="0" ContinueOnError="true">
+      <Output TaskParameter="CopiedFiles" ItemName="InstalledDll" />
+    </Copy>
+    <Message Importance="high" Condition="'@(InstalledDll)' != ''" Text="dinput8.dll installed in $(BOUTDir)" />
+    <Warning Condition="'@(InstalledDll)' == ''" Text="dinput8.dll not installed: close the game and build again." />
   </Target>
 </Project>
